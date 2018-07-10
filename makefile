@@ -35,9 +35,12 @@ endif
 GCCOPTIONS=-fPIC -Wall --std=c++14 -O3 $(MESENFLAGS)
 CCOPTIONS=-fPIC -Wall -O3 $(MESENFLAGS)
 
-ifeq ($(MESENPLATFORM),x86)
-	MESENPLATFORM=x86
-
+ifeq ($(MESENPLATFORM),armv7)
+	MESENPLATFORM=armv7
+	GCCOPTIONS += -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16
+	CCOPTIONS += -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16
+else ifeq ($(MESENPLATFORM),x86)
+	MESENPLATFORM=x86 
 	GCCOPTIONS += -m32
 	CCOPTIONS += -m32
 else
