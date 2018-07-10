@@ -271,6 +271,7 @@
 #include "Waixing178.h"
 #include "Waixing252.h"
 #include "Yoko.h"
+#include "Mapper404.h"
 
 /*
 Supported mappers:  
@@ -620,6 +621,7 @@ BaseMapper* MapperFactory::GetMapperFromID(RomData &romData)
 		case 348: return new Bmc830118C();
 		case 349: return new BmcG146();
 		case 350: break; //891227
+        case 404: return new Mapper404();
 
 		case 513: return new Sachen9602();
 		//514-517
