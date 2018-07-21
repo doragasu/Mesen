@@ -76,12 +76,12 @@ class Mapper404 : public BaseMapper
 
         void SelectChrBank(void)
         {
-            SelectCHRPage(0, _regShadow[2]);
+            SelectCHRPage(0, _regShadow[0] | (_regShadow[1]<<8));
         }
 
         void SelectPrgBank(void)
         {
-   			SelectPRGPage(0, _regShadow[0] | (_regShadow[1]<<8));
+   			SelectPRGPage(0, _regShadow[2]);
         }
 
 		void WriteRegister(uint16_t addr, uint8_t value) override
@@ -89,17 +89,17 @@ class Mapper404 : public BaseMapper
             switch((NFRomRegisters)(addr & 0xE001)) {
 				case NFRomRegisters::Reg8000:   // CHR bank, low byte
                     _regShadow[0] = value;
-                    SelectPrgBank();
+                    SelectChrBank();
 					break;
 
 				case NFRomRegisters::Reg8001:   // CHR bank, high bits
                     _regShadow[1] = value & 0x3;
-        			SelectPRGPage(0, _regShadow[0] | (_regShadow[1]<<8));
+        			SelectChrBank();
 					break;
 
 				case NFRomRegisters::RegA000:   // PRG bank
                     _regShadow[2] = value;
-                    SelectChrBank();
+                    SelectPrgBank();
 					break;
 
 				case NFRomRegisters::RegA001:   // Mirroring and RAM options
